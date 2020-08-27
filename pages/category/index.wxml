@@ -18,6 +18,7 @@
     <scroll-view
       class="right_content"
       scroll-y
+      scroll-top="{{scrollTop}}"
     >
       <view
         class="goods_group"
@@ -37,6 +38,7 @@
             wx:for-index="index2"
             wx:for-item="item2"
             wx:key="cat_id"
+            url="/pages/goods_list/index?cid={{item2.cat_id}}"
           >
             <image
               mode="widthFix"
