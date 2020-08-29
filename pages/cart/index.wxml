@@ -25,40 +25,59 @@
 <view class="cart_content">
   <view class="cart_title">购物车</view>
   <view class="cart_main">
-    <view
-      class="cart_item"
-      wx:for="{{cart}}"
-      wx:key="goods_id"
-    >
-      <!-- 复选框 -->
-      <view class="cart_chk_wrap">
-        <checkbox-group
-          bindchange="handleItemChange"
-          data-id="{{item.goods_id}}"
-        >
-          <checkbox checked="{{item.checked}}"></checkbox>
-        </checkbox-group>
-      </view>
-      <!-- 商品图片 -->
-      <navigator class="cart_img_wrap">
-        <image
-          mode="widthFix"
-          src="{{item.goods_small_logo}}"
-        />
-      </navigator>
-      <!-- 商品信息 -->
-      <view class="cart_info_wrap">
-        <view class="goods_name">{{item.goods_name}}</view>
-        <view class="goods_price_wrap">
-          <view class="goods_price">￥{{item.goods_price}}</view>
-          <view class="cart_num_tool">
-            <view class="num_edit">-</view>
-            <view class="goods_num">{{item.num}}</view>
-            <view class="num_edit">+</view>
+    <!-- 当 cart 长度不为0显示商品信息 -->
+    <block wx:if="{{cart.length !== 0}}">
+      <view
+        class="cart_item"
+        wx:for="{{cart}}"
+        wx:key="goods_id"
+      >
+        <!-- 复选框 -->
+        <view class="cart_chk_wrap">
+          <checkbox-group
+            bindchange="handleItemChange"
+            data-id="{{item.goods_id}}"
+          >
+            <checkbox checked="{{item.checked}}"></checkbox>
+          </checkbox-group>
+        </view>
+        <!-- 商品图片 -->
+        <navigator class="cart_img_wrap">
+          <image
+            mode="widthFix"
+            src="{{item.goods_small_logo}}"
+          />
+        </navigator>
+        <!-- 商品信息 -->
+        <view class="cart_info_wrap">
+          <view class="goods_name">{{item.goods_name}}</view>
+          <view class="goods_price_wrap">
+            <view class="goods_price">￥{{item.goods_price}}</view>
+            <view class="cart_num_tool">
+              <view
+                class="num_edit"
+                bindtap="handleItemNumEdit"
+                data-id="{{item.goods_id}}"
+                data-operation="{{-1}}"
+              >-</view>
+              <view class="goods_num">{{item.num}}</view>
+              <view
+                class="num_edit"
+                bindtap="handleItemNumEdit"
+                data-id="{{item.goods_id}}"
+                data-operation="{{1}}"
+              >+</view>
+            </view>
           </view>
         </view>
       </view>
-    </view>
+    </block>
+    <block wx:else>
+      <image
+        mode="widthFix"
+        src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1598691454216&di=a3fc1421854723a41404a7817a58dc91&imgtype=0&src=http%3A%2F%2Fhbimg.b0.upaiyun.com%2Fe1b1467beea0a9c7d6a56b32bac6d7e5dcd914f7c3e6-YTwUd6_fw658"
+      />
+    </block>
   </view>
 </view>
 
@@ -79,5 +98,8 @@
     </view>
   </view>
   <!-- 结算 -->
-  <view class="order_pay_wrap">结算({{totalNum}})</view>
+  <view
+    class="order_pay_wrap"
+    bindtap="handlePay"
+  >结算({{totalNum}})</view>
 </view>

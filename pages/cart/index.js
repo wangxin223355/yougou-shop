@@ -1,5 +1,11 @@
 import regeneratorRuntime from '../../lib/runtime/runtime'
-import { getSetting, chooseAddress, openSetting } from '../../utils/ayncWx'
+import {
+  getSetting,
+  chooseAddress,
+  openSetting,
+  showModal,
+  showToast,
+} from '../../utils/ayncWx'
 
 Page({
   data: {
@@ -77,5 +83,50 @@ Page({
       allChecked,
     })
     this.setCart(cart)
+  },
+  // 商品数量的编辑功能
+  async handleItemNumEdit(e) {
+    const { operation, id } = e.currentTarget.dataset
+    let { cart } = this.data
+    const index = cart.findIndex((v) => v.goods_id === id)
+    if (cart[index].num === 1 && operation === -1) {
+      // wx.showModal({
+      //   title: '提示',
+      //   content: '您是否要删除？',
+      //   success: (res) => {
+      //     if (res.confirm) {
+      //       cart.splice(index, 1)
+      //       this.setCart(cart)
+      //     } else if (res.cancel) {
+      //       console.log('用户点击取消')
+      //     }
+      //   },
+      // })
+      const res = await showModal({ content: '您是否要删除？' })
+      if (res.confirm) {
+        cart.splice(index, 1)
+        this.setCart(cart)
+      } else if (res.cancel) {
+        console.log('用户点击取消')
+      }
+    } else {
+      cart[index].num += operation
+      this.setCart(cart)
+    }
+  },
+  // 点击 结算
+  async handlePay() {
+    const { address, totalNum } = this.data
+    if (!address.userName) {
+      await showToast({ title: '您还没有选择收获地址' })
+      return
+    }
+    if (totalNum === 0) {
+      await showToast({ title: '您还没有选择商品' })
+      return
+    }
+    wx.navigateTo({
+      url: '/pages/pay/index',
+    })
   },
 })
