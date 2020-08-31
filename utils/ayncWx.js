@@ -39,6 +39,23 @@ export const openSetting = function () {
 }
 
 /**
+ * @description promise 形式 login
+ */
+export const login = function () {
+  return new Promise((reslove, reject) => {
+    wx.login({
+      timeout: 10000,
+      success: (result) => {
+        reslove(result)
+      },
+      fail: (err) => {
+        reject(err)
+      },
+    })
+  })
+}
+
+/**
  * @description promise 形式 showModal
  * @param {object} content 参数
  */
@@ -69,6 +86,25 @@ export const showToast = function ({ title }) {
       image: '',
       duration: 1500,
       mask: false,
+      success: (result) => {
+        reslove(result)
+      },
+      fail: (err) => {
+        reject(err)
+      },
+      complete: () => {},
+    })
+  })
+}
+
+/**
+ * @description promise 形式 requestPayment
+ * @param {object} pay 支付所必要的参数
+ */
+export const requestPayment = function ({ pay }) {
+  return new Promise((reslove, reject) => {
+    wx.requestPayment({
+      ...pay,
       success: (result) => {
         reslove(result)
       },

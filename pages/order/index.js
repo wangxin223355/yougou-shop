@@ -1,66 +1,67 @@
-// pages/order/index.js
+import { request } from '../../request/index'
+import regeneratorRuntime from '../../lib/runtime/runtime'
+
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
-
+    orders: [],
+    tabs: [
+      {
+        id: 0,
+        value: '全部',
+        isActive: true,
+      },
+      {
+        id: 1,
+        value: '代付款',
+        isActive: false,
+      },
+      {
+        id: 2,
+        value: '代发货',
+        isActive: false,
+      },
+      {
+        id: 3,
+        value: '退款/退货',
+        isActive: false,
+      },
+    ],
   },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
-
+  onShow(options) {
+    const token = wx.getStorageSync('token')
+    if (!token) {
+      wx.navigateTo({
+        url: '/pages/auth/index',
+      })
+      return
+    }
+    let pages = getCurrentPages()
+    let currentPage = pages[pages.length - 1]
+    const { type } = currentPage.options
+    this.changeTitleByIndex(type - 1)
+    this.getOrders(type)
   },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
+  // 获取订单列表
+  async getOrders(type) {
+    const res = await request({ url: '/my/orders/all', data: { type } })
+    this.setData({
+      orders: res.orders,
+    })
   },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
+  // 根据标题的索引来激活选中的选中标题数组
+  changeTitleByIndex(index) {
+    let { tabs } = this.data
+    tabs.forEach((v, i) => {
+      i === index ? (v.isActive = true) : (v.isActive = false)
+    })
+    this.setData({
+      tabs,
+    })
   },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
+  // 切换 tabs
+  handleItemChange(e) {
+    const { index } = e.detail
+    this.changeTitleByIndex(index)
+    this.getOrders(index + 1)
   },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
 })
