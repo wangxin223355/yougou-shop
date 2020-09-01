@@ -45,7 +45,10 @@ Page({
   async getOrders(type) {
     const res = await request({ url: '/my/orders/all', data: { type } })
     this.setData({
-      orders: res.orders,
+      orders: res.orders.map((v) => ({
+        ...v,
+        create_time_cn: new Date(v.create_time * 1000).toLocaleString(),
+      })),
     })
   },
   // 根据标题的索引来激活选中的选中标题数组

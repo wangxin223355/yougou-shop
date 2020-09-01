@@ -127,6 +127,12 @@
 					"pathName": "pages/order/index",
 					"query": "type=1",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "商品收藏",
+					"pathName": "pages/collect/index",
+					"scene": null
 				}
 			]
 		}

@@ -10,7 +10,7 @@ page {
   width: 60%;
 }
 .goods_price {
-  paddding: 15rpx;
+  padding: 15rpx;
   font-size: 31rpx;
   font-weight: 600;
   color: var(--themeColor);
@@ -38,6 +38,9 @@ page {
   justify-content: center;
   align-items: center;
   border-left: 2rpx solid #000;
+}
+.goods_name_row .goods_collect .icon-collection-b {
+  color: orangered;
 }
 .goods_info .goods_info_title {
   font-size: 32rpx;
