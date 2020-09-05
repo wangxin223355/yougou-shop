@@ -132,6 +132,13 @@
 					"id": -1,
 					"name": "商品收藏",
 					"pathName": "pages/collect/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "搜索页面",
+					"pathName": "pages/search/index",
 					"scene": null
 				}
 			]
