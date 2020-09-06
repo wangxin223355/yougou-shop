@@ -1,0 +1,9 @@
+var filter = {
+  getQuery: function (value) {
+    return value.split('?')[1]
+  },
+}
+
+module.exports = {
+  getQuery: filter.getQuery,
+}

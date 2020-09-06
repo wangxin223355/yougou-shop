@@ -1,13 +1,28 @@
+<wxs
+  module="filter"
+  src="./index.wxs"
+></wxs>
 <view class="pyg_index">
   <!-- 搜索框 开始 -->
   <SearchInput />
   <!-- 搜索框 结束 -->
   <!-- 轮播图 开始 -->
   <view class="index_swiper">
-    <swiper indicator-dots autoplay circular indicator-active-color="#eb4450">
-      <swiper-item wx:for="{{swiperList}}" wx:key="goods_id">
-        <navigator>
-          <image src="{{item.image_src}}" mode="widthFix" />
+    <swiper
+      indicator-dots
+      autoplay
+      circular
+      indicator-active-color="#eb4450"
+    >
+      <swiper-item
+        wx:for="{{swiperList}}"
+        wx:key="goods_id"
+      >
+        <navigator url="/pages/goods_detail/index?goods_id={{item.goods_id}}">
+          <image
+            src="{{item.image_src}}"
+            mode="widthFix"
+          />
         </navigator>
       </swiper-item>
     </swiper>
@@ -15,8 +30,16 @@
   <!-- 轮播图 结束 -->
   <!-- 导航 开始 -->
   <view class="index_cate">
-    <navigator wx:for="{{catesList}}" wx:key="name">
-      <image mode="widthFix" src="{{item.image_src}}" />
+    <navigator
+      wx:for="{{catesList}}"
+      wx:key="name"
+      url="/pages/category/index"
+      open-type="switchTab"
+    >
+      <image
+        mode="widthFix"
+        src="{{item.image_src}}"
+      />
     </navigator>
   </view>
   <!-- 导航 结束 -->
@@ -31,7 +54,10 @@
     >
       <!-- 标题 -->
       <view class="floor_title">
-        <image mode="widthFix" src="{{item1.floor_title.image_src}}" />
+        <image
+          mode="widthFix"
+          src="{{item1.floor_title.image_src}}"
+        />
       </view>
       <!-- 内容 -->
       <view class="floor_list">
@@ -40,8 +66,12 @@
           wx:for-item="item2"
           wx:for-index="index2"
           wx:key="name"
+          url="/pages/goods_list/index?{{filter.getQuery(item2.navigator_url)}}"
         >
-          <image src="{{item2.image_src}}" mode="{{index2===0?'widthFix':'scaleToFill'}}" />
+          <image
+            src="{{item2.image_src}}"
+            mode="{{index2===0?'widthFix':'scaleToFill'}}"
+          />
         </navigator>
       </view>
     </view>

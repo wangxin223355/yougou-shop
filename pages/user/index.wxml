@@ -74,7 +74,10 @@
         <text>联系客服</text>
         <text>17782241568</text>
       </view>
-      <view class="app_info_item">意见反馈</view>
+      <navigator
+        url="/pages/feedback/index"
+        class="app_info_item"
+      >意见反馈</navigator>
       <view class="app_info_item">关于我们</view>
     </view>
     <!-- 推荐 -->
